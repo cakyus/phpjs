@@ -1,3 +1,4 @@
+import * as os from 'os';
 
 /**
  * Determine whether a variable is empty.
@@ -79,42 +80,36 @@ async function is_file(file) {
 // 11  blksize blocksize of filesystem IO **
 // 12  blocks  number of 512-byte blocks allocated **
 
-async function stat(filename) {
+function stat(filename) {
 
-  let tjs_stat = {};
-  try {
-    tjs_stat = await tjs.stat(filename);
-  } catch(e) {
-    return false;
-  }
-
-  if (empty(tjs_stat) == true) {
+  let js_stat = os.stat(filename);
+  if (empty(js_stat) == true) {
     return false;
   }
 
   // convert tjs stat to php stat
-  const result = {};
-  result['dev'] = tjs_stat['dev'];
-  result['ino'] = tjs_stat['ino'];
-  result['mode'] = tjs_stat['mode'];
-  result['nlink'] = tjs_stat['nlink'];
-  result['uid'] = tjs_stat['uid'];
-  result['gid'] = tjs_stat['gid'];
-  result['rdev'] = tjs_stat['rdev'];
-  result['size'] = tjs_stat['size'];
-  result['atime'] = Math.round(tjs_stat['atim'] / 1000);
-  result['mtime'] = Math.round(tjs_stat['mtim'] / 1000);
-  result['ctime'] = Math.round(tjs_stat['ctim'] / 1000);
-  result['blksize'] = tjs_stat['blksize'];
-  result['blocks'] = tjs_stat['blocks'];
-  return result;
+  const php_stat = {};
+  php_stat['dev'] = js_stat['dev'];
+  php_stat['ino'] = js_stat['ino'];
+  php_stat['mode'] = js_stat['mode'];
+  php_stat['nlink'] = js_stat['nlink'];
+  php_stat['uid'] = js_stat['uid'];
+  php_stat['gid'] = js_stat['gid'];
+  php_stat['rdev'] = js_stat['rdev'];
+  php_stat['size'] = js_stat['size'];
+  php_stat['atime'] = Math.round(js_stat['atim'] / 1000);
+  php_stat['mtime'] = Math.round(js_stat['mtim'] / 1000);
+  php_stat['ctime'] = Math.round(js_stat['ctim'] / 1000);
+  php_stat['blksize'] = js_stat['blksize'];
+  php_stat['blocks'] = js_stat['blocks'];
+  return php_stat;
 }
 
 // @param string filename
 // @return int|false
 
-async function filemtime(filename) {
-  const result = await stat(filename);
+function filemtime(filename) {
+  const result = stat(filename);
   if (result === false) { return false; }
   return result.mtime;
 }

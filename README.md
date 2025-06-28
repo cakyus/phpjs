@@ -12,6 +12,12 @@ if (empty(false) == true) {
 }
 ```
 
+Testing
+
+```sh
+tjs run test.js
+```
+
 # License
 
 MIT

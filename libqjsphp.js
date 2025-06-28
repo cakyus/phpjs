@@ -85,23 +85,25 @@ function stat(filename) {
   let js_stat = os.stat(filename);
   if (empty(js_stat) == true) {
     return false;
+  } else if (js_stat[1] != 0) {
+    return false;
   }
 
   // convert tjs stat to php stat
   const php_stat = {};
-  php_stat['dev'] = js_stat['dev'];
-  php_stat['ino'] = js_stat['ino'];
-  php_stat['mode'] = js_stat['mode'];
-  php_stat['nlink'] = js_stat['nlink'];
-  php_stat['uid'] = js_stat['uid'];
-  php_stat['gid'] = js_stat['gid'];
-  php_stat['rdev'] = js_stat['rdev'];
-  php_stat['size'] = js_stat['size'];
-  php_stat['atime'] = Math.round(js_stat['atim'] / 1000);
-  php_stat['mtime'] = Math.round(js_stat['mtim'] / 1000);
-  php_stat['ctime'] = Math.round(js_stat['ctim'] / 1000);
-  php_stat['blksize'] = js_stat['blksize'];
-  php_stat['blocks'] = js_stat['blocks'];
+  php_stat['dev'] = js_stat[0]['dev'];
+  php_stat['ino'] = js_stat[0]['ino'];
+  php_stat['mode'] = js_stat[0]['mode'];
+  php_stat['nlink'] = js_stat[0]['nlink'];
+  php_stat['uid'] = js_stat[0]['uid'];
+  php_stat['gid'] = js_stat[0]['gid'];
+  php_stat['rdev'] = js_stat[0]['rdev'];
+  php_stat['size'] = js_stat[0]['size'];
+  php_stat['atime'] = Math.round(js_stat[0].atime / 1000);
+  php_stat['mtime'] = Math.round(js_stat[0]['mtime'] / 1000);
+  php_stat['ctime'] = Math.round(js_stat[0]['ctime'] / 1000);
+  php_stat['blksize'] = js_stat[0]['blksize'];
+  php_stat['blocks'] = js_stat[0]['blocks'];
   return php_stat;
 }
 
@@ -109,9 +111,9 @@ function stat(filename) {
 // @return int|false
 
 function filemtime(filename) {
-  const result = stat(filename);
-  if (result === false) { return false; }
-  return result.mtime;
+  const php_stat = stat(filename);
+  if (php_stat === false) { return false; }
+  return php_stat.mtime;
 }
 
 // @param string pattern

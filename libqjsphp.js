@@ -222,14 +222,10 @@ function putenv(assignment) {
 // @return null|false
 // Return null on success and false on error.
 
-async function passthru(command) {
-
+function passthru(command) {
   let options = {};
-  // tjs.spawn require an array in which the first member is an executable.
-  // it it doesnt -> Error: no such file or directory
-  let process = await tjs.spawn(command.split(' '));
-  let status = await process.wait();
-  if (status.exit_status == 0) {
+  let exit_status = os.exec(command.split(' '));
+  if (exit_status == 0) {
     return null;
   }
   return false;

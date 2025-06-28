@@ -3401,6 +3401,17 @@ function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-di
   return newStrArr.join('\n')
 }
 
+function file_get_contents(filename) {
+  const f = os.open(filename, os.O_RDONLY);
+  const file_stat = stat(filename);
+  const buffers = new ArrayBuffer(file_stat.size);
+  os.read(f, buffers, 0, file_stat.size, 0);
+  os.close(f);
+  const chars = new Uint8Array(buffers);
+  // NOTE: quickjs does not have TextDecoder
+  return String.fromCharCode(...chars);
+}
+
 export {
   array_change_key_case
 , array_chunk
@@ -3455,6 +3466,7 @@ export {
 , end
 , explode
 , filemtime
+, file_get_contents
 , getenv
 , glob
 , in_array

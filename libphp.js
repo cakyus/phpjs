@@ -3408,6 +3408,15 @@ function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-di
   return newStrArr.join('\n')
 }
 
+// @param string filename
+// @return string|false
+
+async function file_get_contents(filename) {
+  const chars = await tjs.readFile(filename);
+  const decoder = new TextDecoder();
+  return decoder.decode(chars);
+}
+
 export {
   array_change_key_case
 , array_chunk
@@ -3462,6 +3471,7 @@ export {
 , end
 , explode
 , filemtime
+, file_get_contents
 , getenv
 , glob
 , in_array

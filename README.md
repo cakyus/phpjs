@@ -1,6 +1,6 @@
 # phpjs
 
-use PHP methods in txikijs.
+use PHP methods in [txikijs](https://github.com/saghul/txiki.js/).
 
 # Usage
 

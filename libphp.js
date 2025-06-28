@@ -126,20 +126,15 @@ async function filemtime(filename) {
 async function glob(pattern, flags) {
 
   const files = [];
-  const glob_files = os.readdir('.');
 
-  if (glob_files[1] != 0) {
-    throw Error("os.readdir failed.");
-  }
-
-  for (let glob_file of glob_files[0]) {
+  const glob_files = await tjs.readDir('.');
+  for await (let glob_file of glob_files) {
 
     if (glob_file == '.' || glob_file == '..') {
       continue;
     }
 
     const match = glob_file.match(pattern);
-
     if (Object.is(match, null) == true) {
       continue;
     }

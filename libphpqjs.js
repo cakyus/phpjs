@@ -51,13 +51,11 @@ import {
 , empty
 , end
 , explode
-, getenv
 , in_array
 , is_null
 , key
 , next
 , prev
-, putenv
 , range
 , reset
 , str_replace
@@ -69,6 +67,7 @@ import {
 } from './libphp.js';
 
 import * as os from 'os';
+import * as std from 'std';
 
 // @return bool
 
@@ -142,9 +141,9 @@ function filemtime(filename) {
 async function glob(pattern, flags) {
 
   const files = [];
+  const glob_files = os.readdir('.');
 
-  const glob_files = await tjs.readDir('.');
-  for await (let glob_file of glob_files) {
+  for (let glob_file of glob_files[0]) {
 
     if (glob_file == '.' || glob_file == '..') {
       continue;
@@ -211,6 +210,13 @@ function file_get_contents(filename) {
   const chars = new Uint8Array(buffers);
   // NOTE: quickjs does not have TextDecoder
   return String.fromCharCode(...chars);
+}
+
+// Exit current running program
+// @param int code Program exit code.
+// @return void
+function exit(code) {
+	std.exit(code);
 }
 
 export {
@@ -286,5 +292,6 @@ export {
 , utf8_encode
 , xdiff_string_diff
 , xdiff_string_patch
+, exit
 };
 

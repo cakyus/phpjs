@@ -51,13 +51,11 @@ import {
 , empty
 , end
 , explode
-, getenv
 , in_array
 , is_null
 , key
 , next
 , prev
-, putenv
 , range
 , reset
 , str_replace
@@ -214,6 +212,13 @@ async function file_get_contents(filename) {
   return decoder.decode(chars);
 }
 
+// Exit current running program
+// @param int code Program exit code.
+// @return void
+function exit(code) {
+	tjs.exit(code);
+}
+
 export {
   array_change_key_case
 , array_chunk
@@ -287,5 +292,6 @@ export {
 , utf8_encode
 , xdiff_string_diff
 , xdiff_string_patch
+, exit
 };
 

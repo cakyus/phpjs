@@ -5,7 +5,7 @@ use PHP methods in [txikijs](https://github.com/saghul/txiki.js/).
 # Usage
 
 ```javascript
-import { empty } from './libphp.js';
+import { empty } from './libphptjs.js';
 
 if (empty(false) == true) {
   console.log('"false" is empty.');

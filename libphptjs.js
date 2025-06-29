@@ -68,8 +68,6 @@ import {
 , xdiff_string_patch
 } from './libphp.js';
 
-import * as os from 'os';
-
 // @return bool
 
 async function is_file(file) {
@@ -99,40 +97,44 @@ async function is_file(file) {
 // 11  blksize blocksize of filesystem IO **
 // 12  blocks  number of 512-byte blocks allocated **
 
-function stat(filename) {
+async function stat(filename) {
 
-  let js_stat = os.stat(filename);
-  if (empty(js_stat) == true) {
+  let js_stat = {};
+  try {
+    js_stat = await tjs.stat(filename);
+  } catch(e) {
     return false;
-  } else if (js_stat[1] != 0) {
+  }
+
+  if (empty(js_stat) == true) {
     return false;
   }
 
   // convert tjs stat to php stat
   const php_stat = {};
-  php_stat['dev'] = js_stat[0]['dev'];
-  php_stat['ino'] = js_stat[0]['ino'];
-  php_stat['mode'] = js_stat[0]['mode'];
-  php_stat['nlink'] = js_stat[0]['nlink'];
-  php_stat['uid'] = js_stat[0]['uid'];
-  php_stat['gid'] = js_stat[0]['gid'];
-  php_stat['rdev'] = js_stat[0]['rdev'];
-  php_stat['size'] = js_stat[0]['size'];
-  php_stat['atime'] = Math.round(js_stat[0].atime / 1000);
-  php_stat['mtime'] = Math.round(js_stat[0]['mtime'] / 1000);
-  php_stat['ctime'] = Math.round(js_stat[0]['ctime'] / 1000);
-  php_stat['blksize'] = js_stat[0]['blksize'];
-  php_stat['blocks'] = js_stat[0]['blocks'];
+  php_stat['dev'] = js_stat['dev'];
+  php_stat['ino'] = js_stat['ino'];
+  php_stat['mode'] = js_stat['mode'];
+  php_stat['nlink'] = js_stat['nlink'];
+  php_stat['uid'] = js_stat['uid'];
+  php_stat['gid'] = js_stat['gid'];
+  php_stat['rdev'] = js_stat['rdev'];
+  php_stat['size'] = js_stat['size'];
+  php_stat['atime'] = Math.round(js_stat['atim'] / 1000);
+  php_stat['mtime'] = Math.round(js_stat['mtim'] / 1000);
+  php_stat['ctime'] = Math.round(js_stat['ctim'] / 1000);
+  php_stat['blksize'] = js_stat['blksize'];
+  php_stat['blocks'] = js_stat['blocks'];
   return php_stat;
 }
 
 // @param string filename
 // @return int|false
 
-function filemtime(filename) {
-  const php_stat = stat(filename);
-  if (php_stat === false) { return false; }
-  return php_stat.mtime;
+async function filemtime(filename) {
+  const result = await stat(filename);
+  if (result === false) { return false; }
+  return result.mtime;
 }
 
 // @param string pattern
@@ -190,10 +192,14 @@ function putenv(assignment) {
 // @return null|false
 // Return null on success and false on error.
 
-function passthru(command) {
+async function passthru(command) {
+
   let options = {};
-  let exit_status = os.exec(command.split(' '));
-  if (exit_status == 0) {
+  // tjs.spawn require an array in which the first member is an executable.
+  // it it doesnt -> Error: no such file or directory
+  let process = await tjs.spawn(command.split(' '));
+  let status = await process.wait();
+  if (status.exit_status == 0) {
     return null;
   }
   return false;
@@ -202,15 +208,10 @@ function passthru(command) {
 // @param string filename
 // @return string|false
 
-function file_get_contents(filename) {
-  const f = os.open(filename, os.O_RDONLY);
-  const file_stat = stat(filename);
-  const buffers = new ArrayBuffer(file_stat.size);
-  os.read(f, buffers, 0, file_stat.size, 0);
-  os.close(f);
-  const chars = new Uint8Array(buffers);
-  // NOTE: quickjs does not have TextDecoder
-  return String.fromCharCode(...chars);
+async function file_get_contents(filename) {
+  const chars = await tjs.readFile(filename);
+  const decoder = new TextDecoder();
+  return decoder.decode(chars);
 }
 
 export {

@@ -66,8 +66,8 @@ import {
 , xdiff_string_patch
 } from './libphp.js';
 
-import * as os from 'os';
-import * as std from 'std';
+import * as os from 'qjs:os';
+import * as std from 'qjs:std';
 
 // @return bool
 

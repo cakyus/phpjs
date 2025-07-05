@@ -7,7 +7,8 @@
  *  - undefined
  *  - bool wich is false
  *  - string with zero length
- *  - number which is zero
+ *  - number which is zero or less than zero
+ *    - less than zero coz String.indexOf() return -1 when no match found
  *  - array with zero elements
  *  - object with zero properties
  *
@@ -41,10 +42,10 @@ function empty(value) {
     }
     return true;
   } else if (type == 'number') {
-    if (value === 0) {
-      return true;
+    if (value > 0) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   throw new Error('Type '+type+' is invalid');

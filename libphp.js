@@ -196,6 +196,14 @@ function is_null(value) {
   return false;
 }
 
+// Finds whether a variable is an array
+// @param mixed value
+// @return bool
+
+function is_array(value) {
+  return Array.isArray(value);
+}
+
 /**
  * array_change_key_case for phpjs
  */
@@ -3409,6 +3417,7 @@ end,
 explode,
 fnmatch,
 in_array,
+is_array,
 is_null,
 key,
 next,

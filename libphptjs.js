@@ -216,7 +216,7 @@ async function file_get_contents(filename) {
 // @param int code Program exit code.
 // @return void
 function exit(code) {
-	tjs.exit(code);
+  tjs.exit(code);
 }
 
 export {
@@ -294,4 +294,3 @@ export {
 , xdiff_string_patch
 , exit
 };
-

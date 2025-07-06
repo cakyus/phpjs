@@ -37,4 +37,3 @@ function test_empty() {
   assert(true, empty(null));
   assert(true, empty(undefined));
 }
-

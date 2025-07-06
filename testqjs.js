@@ -1,6 +1,11 @@
-import { empty } from './libphpqjs.js';
+import { assert } from './libtest.js';
+import {
+  is_array,
+  glob
+} from './libphpqjs.js';
 
-if (empty(0) == false) {
-  console.log('ERROR: empty number zero.');
+test_glob();
+
+function test_glob() {
+  assert(true, is_array(glob('lib*.js')));
 }
-

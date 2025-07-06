@@ -1,3 +1,5 @@
+// libphpqjs.js
+
 import {
   array_change_key_case
 , array_chunk
@@ -51,8 +53,10 @@ import {
 , empty
 , end
 , explode
+, fnmatch
 , in_array
 , is_null
+, is_array
 , key
 , next
 , prev
@@ -138,23 +142,17 @@ function filemtime(filename) {
 // @param int flags
 // @return array|false
 
-async function glob(pattern, flags) {
+function glob(pattern, flags) {
 
   const files = [];
   const glob_files = os.readdir('.');
 
-  for (let glob_file of glob_files[0]) {
-
-    if (glob_file == '.' || glob_file == '..') {
+  for (let file of glob_files[0]) {
+    if (file == '.' || file == '..') {
       continue;
+    } else if (fnmatch(pattern, file) == true) {
+      files.push(file);
     }
-
-    const match = glob_file.match(pattern);
-    if (Object.is(match, null) == true) {
-      continue;
-    }
-
-    files.push(glob_file);
   }
 
   return files;
@@ -216,7 +214,7 @@ function file_get_contents(filename) {
 // @param int code Program exit code.
 // @return void
 function exit(code) {
-	std.exit(code);
+  std.exit(code);
 }
 
 export {
@@ -278,6 +276,7 @@ export {
 , glob
 , in_array
 , is_file
+, is_array
 , is_null
 , key
 , next
@@ -294,4 +293,3 @@ export {
 , xdiff_string_patch
 , exit
 };
-

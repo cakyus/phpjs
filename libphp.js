@@ -51,8 +51,87 @@ function empty(value) {
   throw new Error('Type '+type+' is invalid');
 }
 
+// Match filename against a pattern
+//
+// @param string pattern
+// @param string filename
+// @return bool
+//
+// "?"   match one char
+// "*"   match zero or more chars
+// "[ ]" match range of charaters
+// "!"   negate charater in square brackets
+// "\"   escape special characters
+
 function fnmatch(pattern, filename) {
 
+  const patterns = pattern.split('');
+  const filenames = [ filename.split('') ];
+
+  while (patterns.length > 0) {
+
+    if (patterns[0] == '*') {
+
+      if (patterns.length == 1) {
+        // when asteric at the end of pattern
+        // then ignore filenames and return true
+        return true;
+      }
+
+      // add possible values into filenames
+      // filenames ["abc","def"]
+      // -> ["abc","bc","c","def","ef","f"]
+
+      const filenames_length = filenames.length;
+      for (let i=0; i < filenames_length; i++) {
+        const filename_length = filenames[i].length;
+        for (let j=1; j < filename_length; j++) {
+          filenames.push(filenames[i].slice(j));
+        }
+      }
+
+      patterns.shift();
+      continue;
+    } else if (patterns[0] == '?') {
+      throw Error('TODO implement "?"');
+    } else if (patterns[0] == '[' || patterns[0] == ']') {
+      throw Error('TODO implement "[ ..]"');
+    } else if (patterns[0] == '\\') {
+      throw Error('TODO implement "\\"');
+    }
+
+    // compare pattern with filenames
+
+    let filenames_length = filenames.length;
+
+    for (let f=0; f < filenames_length; f++) {
+
+      if (filenames[f][0] == patterns[0]) {
+        // match
+        if (patterns.length == 1) {
+          // at the last char of pattern
+          return true;
+        }
+        filenames[f] = filenames[f].slice(1);
+      } else {
+        // not match
+        // remove filenames item at current index
+        // f 0
+        // filenames [b,c,d]
+        // -> filenames [c,d]
+        filenames.splice(f, 1);
+        // set counter to previous index
+        filenames_length = filenames_length - 1;
+        f = f - 1;
+        continue;
+      }
+    }
+
+    // evaluate next char in the pattern
+    patterns.shift();
+  }
+
+  return false;
 }
 
 // Return current Unix timestamp.
@@ -116,7 +195,7 @@ function is_null(value) {
   }
   return false;
 }
-  
+
 /**
  * array_change_key_case for phpjs
  */
@@ -2227,7 +2306,7 @@ function end (arr) {
  * explode for phpjs
  */
 function explode(search, string) {
-	return string.split(search);
+  return string.split(search);
 }
 /**
  * in_array for phpjs
@@ -3328,6 +3407,7 @@ each,
 empty,
 end,
 explode,
+fnmatch,
 in_array,
 is_null,
 key,
@@ -3342,4 +3422,3 @@ utf8_encode,
 xdiff_string_diff,
 xdiff_string_patch
 };
-

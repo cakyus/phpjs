@@ -2,12 +2,21 @@ import { assert } from './libtest.js';
 import {
   is_array,
   fnmatch,
-  empty
+  empty,
+  property_exists
 } from './libphp.js';
 
 test_is_array();
 test_fnmatch();
 test_empty();
+test_property_exists();
+
+function test_property_exists() {
+  const o = {};
+  o.name = 'John';
+  assert(true, property_exists(o, 'name'));
+  assert(false, property_exists(o, 'email'));
+}
 
 function test_is_array() {
 

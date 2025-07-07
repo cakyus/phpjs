@@ -3362,6 +3362,24 @@ function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-di
   return newStrArr.join('\n')
 }
 
+// Checks if the object or class has a property.
+//
+// @param object value
+// @param string property
+// @return bool
+
+function property_exists(value, property) {
+
+  // How do I check if an object has a specific property in JavaScript ?
+  // https://stackoverflow.com/a/77782005/82126
+
+  if (property in value) {
+    return true;
+  }
+
+  return false;
+}
+
 export {
 array_change_key_case,
 array_chunk,
@@ -3422,6 +3440,7 @@ is_null,
 key,
 next,
 prev,
+property_exists,
 range,
 reset,
 str_replace,

@@ -60,6 +60,7 @@ import {
 , key
 , next
 , prev
+, property_exists
 , range
 , reset
 , str_replace

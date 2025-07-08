@@ -1,3 +1,4 @@
+const PHP_INT_MAX = 9223372036854775807;
 
 /**
  * Determine whether a variable is empty.
@@ -2310,11 +2311,26 @@ function end (arr) {
   pointers[arrpos + 1] = arr.length - 1
   return arr[pointers[arrpos + 1]]
 }
-/**
- * explode for phpjs
- */
-function explode(search, string) {
-  return string.split(search);
+
+// Split a string by a string.
+//
+// @param string separator
+// @param string string
+// @param int limit optional
+
+function explode(separator, string, limit = PHP_INT_MAX) {
+  // the limit
+  // js:
+  //   'a b c'.split(' ', 2)  => ['a', 'b']
+  // php:
+  //   explode(' ','a b c',2) => ['a','b c']
+
+  let data = string.split(separator);
+  if (limit < data.length) {
+    const last = data.splice(limit - 1);
+    data.push(last.join(' '));
+  }
+  return data;
 }
 /**
  * in_array for phpjs
@@ -3450,3 +3466,4 @@ utf8_encode,
 xdiff_string_diff,
 xdiff_string_patch
 };
+

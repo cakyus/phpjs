@@ -1,15 +1,27 @@
 import { assert } from './libtest.js';
 import {
-  is_array,
-  fnmatch,
-  empty,
-  property_exists
+is_array,
+fnmatch,
+empty,
+property_exists,
+explode
 } from './libphp.js';
 
 test_is_array();
 test_fnmatch();
 test_empty();
 test_property_exists();
+test_explode();
+
+function test_explode() {
+
+  assert(['a','b'], explode(' ','a b'));
+  assert(['a','b','c'], explode(' ','a b c',3));
+
+  assert(['a','b c'], explode(' ','a b c',2));
+  assert(['a','b','c d'], explode(' ','a b c d',3));
+  assert(['a','b','c d e'], explode(' ','a b c d e',3));
+}
 
 function test_property_exists() {
   const o = {};

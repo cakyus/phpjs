@@ -2332,9 +2332,18 @@ function explode(separator, string, limit = PHP_INT_MAX) {
   }
   return data;
 }
-/**
- * in_array for phpjs
- */
+
+// Checks if a value exists in an array.
+//
+// @param mixed needle
+// @param array haystack
+// @param bool strict = false
+//
+// If the third parameter strict is set to true then the in_array() function
+// will also check the types of the needle in the haystack.
+//
+// @return bool
+
 function in_array (needle, haystack, argStrict) { // eslint-disable-line camelcase
   //  discuss at: http://locutus.io/php/in_array/
   // original by: Kevin van Zonneveld (http://kvz.io)
@@ -2373,9 +2382,10 @@ function in_array (needle, haystack, argStrict) { // eslint-disable-line camelca
   return false
 }
 
-/**
- * key for phpjs
- */
+// Fetch a key from an array.
+// @param array|object _array
+// @return int|string|null
+
 function key (arr) {
   //  discuss at: http://locutus.io/php/key/
   // original by: Brett Zamir (http://brett-zamir.me)

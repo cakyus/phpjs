@@ -4,7 +4,8 @@ is_array,
 fnmatch,
 empty,
 property_exists,
-explode
+explode,
+in_array
 } from './libphp.js';
 
 test_is_array();
@@ -12,6 +13,12 @@ test_fnmatch();
 test_empty();
 test_property_exists();
 test_explode();
+test_in_array();
+
+function test_in_array() {
+  assert(true, in_array('a', ['a','b','c']));
+  assert(false, in_array('d', ['a','b','c']));
+}
 
 function test_explode() {
 
@@ -58,3 +65,4 @@ function test_empty() {
   assert(true, empty(null));
   assert(true, empty(undefined));
 }
+

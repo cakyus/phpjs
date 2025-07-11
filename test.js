@@ -38,6 +38,9 @@ function test_explode() {
   assert(['a','b c'], explode(' ','a b c',2));
   assert(['a','b','c d'], explode(' ','a b c d',3));
   assert(['a','b','c d e'], explode(' ','a b c d e',3));
+
+  assert(['a','b'], explode('=','a=b'));
+  assert(['a','b=c'], explode('=','a=b=c',2));
 }
 
 function test_property_exists() {

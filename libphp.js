@@ -2328,7 +2328,7 @@ function explode(separator, string, limit = PHP_INT_MAX) {
   let data = string.split(separator);
   if (limit < data.length) {
     const last = data.splice(limit - 1);
-    data.push(last.join(' '));
+    data.push(last.join(separator));
   }
   return data;
 }

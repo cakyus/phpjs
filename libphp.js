@@ -3406,6 +3406,28 @@ function property_exists(value, property) {
   return false;
 }
 
+/**
+ * substr - Return part of string
+ *
+ * @param string string
+ * @param int offset
+ * @param int|null limit default null
+ * @return string
+ **/
+
+function substr(string, offset, limit) {
+
+  if (offset < 0) {
+    offset = string.length + offset
+  }
+
+  if (Object.is(undefined, limit) == true) {
+    return string.substring(offset);
+  } else {
+    return string.substring(offset, offset + limit);
+  }
+}
+
 export {
 array_change_key_case,
 array_chunk,
@@ -3470,6 +3492,7 @@ property_exists,
 range,
 reset,
 str_replace,
+substr,
 time,
 utf8_decode,
 utf8_encode,

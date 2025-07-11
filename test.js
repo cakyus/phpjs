@@ -1,11 +1,12 @@
 import { assert } from './libtest.js';
 import {
-is_array,
-fnmatch,
-empty,
-property_exists,
-explode,
-in_array
+  empty
+, explode
+, fnmatch
+, in_array
+, is_array
+, property_exists
+, substr
 } from './libphp.js';
 
 test_is_array();
@@ -14,6 +15,15 @@ test_empty();
 test_property_exists();
 test_explode();
 test_in_array();
+test_substr();
+
+function test_substr() {
+  assert('bcdef', substr('abcdef', 1));
+  assert('ab', substr('abcdef', 0, 2));
+  assert('bcd', substr('abcdef', 1, 3));
+  assert('f', substr('abcdef', -1));
+  assert('d', substr('abcdef', -3, 1));
+}
 
 function test_in_array() {
   assert(true, in_array('a', ['a','b','c']));

@@ -3395,7 +3395,7 @@ function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-di
 // @return bool
 
 function property_exists(value, property) {
-
+  
   // How do I check if an object has a specific property in JavaScript ?
   // https://stackoverflow.com/a/77782005/82126
 

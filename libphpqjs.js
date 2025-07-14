@@ -1,76 +1,8 @@
 // libphpqjs.js
 
 import {
-  array_change_key_case
-, array_chunk
-, array_combine
-, array_count_values
-, array_diff
-, array_diff_assoc
-, array_diff_key
-, array_diff_uassoc
-, array_diff_ukey
-, array_fill
-, array_fill_keys
-, array_filter
-, array_flip
-, array_intersect
-, array_intersect_assoc
-, array_intersect_key
-, array_intersect_uassoc
-, array_intersect_ukey
-, array_key_exists
-, array_keys
-, array_map
-, array_merge
-, array_multisort
-, array_pad
-, array_pop
-, array_product
-, array_push
-, array_rand
-, array_reduce
-, array_replace
-, array_replace_recursive
-, array_reverse
-, array_search
-, array_shift
-, array_sum
-, array_udiff
-, array_udiff_assoc
-, array_udiff_uassoc
-, array_uintersect
-, array_uintersect_uassoc
-, array_unique
-, array_unshift
-, array_values
-, array_walk
-, array_walk_recursive
-, count
-, current
-, date
-, each
-, empty
-, end
-, explode
-, fnmatch
-, in_array
-, is_null
-, is_array
-, key
-, next
-, prev
-, property_exists
-, range
-, reset
-, str_replace
-, time
-, utf8_decode
-, utf8_encode
-, xdiff_string_diff
-, xdiff_string_patch
+fnmatch
 } from './libphp.js';
-
 import * as os from 'qjs:os';
 import * as std from 'qjs:std';
 
@@ -219,78 +151,11 @@ function exit(code) {
 }
 
 export {
-  array_change_key_case
-, array_chunk
-, array_combine
-, array_count_values
-, array_diff
-, array_diff_assoc
-, array_diff_key
-, array_diff_uassoc
-, array_diff_ukey
-, array_fill
-, array_fill_keys
-, array_filter
-, array_flip
-, array_intersect
-, array_intersect_assoc
-, array_intersect_key
-, array_intersect_uassoc
-, array_intersect_ukey
-, array_key_exists
-, array_keys
-, array_map
-, array_merge
-, array_multisort
-, array_pad
-, array_pop
-, array_product
-, array_push
-, array_rand
-, array_reduce
-, array_replace
-, array_replace_recursive
-, array_reverse
-, array_search
-, array_shift
-, array_sum
-, array_udiff
-, array_udiff_assoc
-, array_udiff_uassoc
-, array_uintersect
-, array_uintersect_uassoc
-, array_unique
-, array_unshift
-, array_values
-, array_walk
-, array_walk_recursive
-, count
-, current
-, date
-, each
-, empty
-, end
-, explode
-, filemtime
-, file_get_contents
-, getenv
-, glob
-, in_array
-, is_file
-, is_array
-, is_null
-, key
-, next
-, passthru
-, prev
-, putenv
-, range
-, reset
-, str_replace
-, time
-, utf8_decode
-, utf8_encode
-, xdiff_string_diff
-, xdiff_string_patch
-, exit
+filemtime,
+file_get_contents,
+getenv,
+glob,
+passthru,
+putenv,
+exit
 };

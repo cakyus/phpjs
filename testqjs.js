@@ -1,8 +1,6 @@
+import { glob } from './libphpqjs.js';
 import { assert } from './libtest.js';
-import {
-  is_array,
-  glob
-} from './libphpqjs.js';
+import { is_array } from './libphp.js';
 
 test_glob();
 

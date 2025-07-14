@@ -206,6 +206,27 @@ function is_array(value) {
 }
 
 /**
+ * is_object - Finds whether a variable is an object
+ * @param mixed value
+ * @return bool
+ **/
+
+function is_object(value) {
+  // js : null is an object
+  if (Object.is(value, null)) {
+    return false;
+  }
+  if (Object.is(value, undefined)) {
+    return false;
+  }
+  // php : object include {} and object created from class
+  if (typeof(value) == 'object') {
+    return true;
+  }
+  return false;
+}
+
+/**
  * array_change_key_case for phpjs
  */
 function array_change_key_case (array, cs) { // eslint-disable-line camelcase
@@ -3485,6 +3506,7 @@ fnmatch,
 in_array,
 is_array,
 is_null,
+is_object,
 key,
 next,
 prev,

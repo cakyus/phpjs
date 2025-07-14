@@ -1,6 +1,7 @@
 // libphpqjs.js
 
 import {
+empty,
 fnmatch
 } from './libphp.js';
 import * as os from 'qjs:os';
@@ -155,6 +156,7 @@ filemtime,
 file_get_contents,
 getenv,
 glob,
+is_file,
 passthru,
 putenv,
 exit

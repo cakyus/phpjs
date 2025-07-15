@@ -1,4 +1,4 @@
-// libphpqjs.js
+// libqjs.js
 
 import {
 empty,

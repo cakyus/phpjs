@@ -1,4 +1,4 @@
-import { glob } from './libphpqjs.js';
+import { glob } from './libqjs.js';
 import { assert } from './libtest.js';
 import { is_array } from './libphp.js';
 

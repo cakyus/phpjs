@@ -1,12 +1,14 @@
 import { assert } from './libtest.js';
 import {
-  empty
-, explode
-, fnmatch
-, in_array
-, is_array
-, property_exists
-, substr
+    empty
+  , explode
+  , fnmatch
+  , in_array
+  , is_array
+  , property_exists
+  , strtoupper
+  , strtolower
+  , substr
 } from './libphp.js';
 
 test_is_array();
@@ -16,6 +18,27 @@ test_property_exists();
 test_explode();
 test_in_array();
 test_substr();
+test_strtoupper();
+test_strtolower();
+
+function test_strtolower() {
+
+  assert('abc', strtolower('ABC'));
+
+  // must not change t
+  const t = 'AB';
+  assert('ab', strtolower(t));
+}
+
+function test_strtoupper() {
+
+  assert('ABC', strtoupper('abc'));
+  assert('ABCD', strtoupper('aBCd'));
+
+  // must not change t
+  const t = 'ab';
+  assert('AB', strtoupper(t));
+}
 
 function test_substr() {
   assert('bcdef', substr('abcdef', 1));

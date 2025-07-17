@@ -9,6 +9,7 @@ import {
   , strtoupper
   , strtolower
   , substr
+  , get_class_vars
 } from './libphp.js';
 
 test_is_array();
@@ -20,6 +21,15 @@ test_in_array();
 test_substr();
 test_strtoupper();
 test_strtolower();
+test_get_class_vars();
+
+function test_get_class_vars() {
+  const o = {
+      var1: 1
+    , var2: 2
+  };
+  assert(['var1','var2'], get_class_vars(o));
+}
 
 function test_strtolower() {
 

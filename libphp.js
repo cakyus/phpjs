@@ -3469,6 +3469,17 @@ function strtolower(string) {
   return string.toLowerCase();
 }
 
+/**
+ * get_class_vars — Get the default properties of the class
+ * @param object o
+ * @return array
+ * @link https://www.php.net/manual/en/function.get-class-vars.php
+ **/
+
+function get_class_vars(o) {
+  return Object.keys(o);
+}
+
 export {
     array_change_key_case
   , array_chunk
@@ -3523,6 +3534,7 @@ export {
   , end
   , explode
   , fnmatch
+  , get_class_vars
   , in_array
   , is_array
   , is_null

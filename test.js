@@ -10,6 +10,10 @@ import {
   , strtolower
   , substr
   , get_class_vars
+  , str_pad
+  , STR_PAD_LEFT
+  , STR_PAD_RIGHT
+  , STR_PAD_BOTH
 } from './libphp.js';
 
 test_is_array();
@@ -22,6 +26,16 @@ test_substr();
 test_strtoupper();
 test_strtolower();
 test_get_class_vars();
+test_str_pad();
+
+function test_str_pad() {
+  const input = 'Alien';
+  assert('Alien     ', str_pad(input, 10));
+  assert('-=-=-Alien', str_pad(input, 10, '-=', STR_PAD_LEFT));
+  assert('__Alien___', str_pad(input, 10, '_', STR_PAD_BOTH));
+  assert('Alien_', str_pad(input, 6, '___'));
+  assert('Alien', str_pad(input, 3, '*'));
+}
 
 function test_get_class_vars() {
   const o = {

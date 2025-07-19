@@ -1,5 +1,9 @@
 const PHP_INT_MAX = 9223372036854775807;
 
+const STR_PAD_LEFT = 0;
+const STR_PAD_RIGHT = 1;
+const STR_PAD_BOTH = 2;
+
 /**
  * Determine whether a variable is empty.
  *
@@ -3480,6 +3484,84 @@ function get_class_vars(o) {
   return Object.keys(o);
 }
 
+/**
+ * str_pad - Pad a string to a certain length with another string
+ *
+ * @param string string
+ * @param int length
+ * @param string pad_string
+ * @param int STR_PAD_RIGHT
+ *
+ * @link https://www.php.net/manual/en/function.str-pad.php
+ **/
+
+function str_pad(string, length, pad_string, pad_type) {
+
+  if (empty(pad_string) == true) {
+    pad_string = ' ';
+  }
+
+  if (is_null(pad_type) == true) {
+    pad_type = STR_PAD_RIGHT;
+  }
+
+  if (length <= string.length) {
+    return string;
+  }
+
+  if (pad_type == STR_PAD_RIGHT) {
+    let repeat_string = str_repeat(pad_string, length);
+    repeat_string = substr(repeat_string, 0, length - string.length);
+    return string + repeat_string;
+  } else if (pad_type == STR_PAD_LEFT) {
+    let repeat_string = str_repeat(pad_string, length);
+    repeat_string = substr(repeat_string, 0, length - string.length);
+    return repeat_string + string;
+  } else if (pad_type == STR_PAD_BOTH) {
+    let repeat_string = str_repeat(pad_string, length);
+    const pad_length = ( length - string.length ) / 2;
+    const pad_left_length = floor( pad_length );
+    const pad_right_length = ceil( pad_length );
+    const pad_left = substr(repeat_string, 0, pad_left_length);
+    const pad_right = substr(repeat_string, 0, pad_right_length);
+    return pad_left + string + pad_right;
+  }
+}
+
+/**
+ * str_repeat - Repeat a string
+ *
+ * @param string string
+ * @param int times
+ * @return string
+ *
+ * @link https://www.php.net/manual/en/function.str-repeat.php
+ **/
+
+function str_repeat(string, times) {
+  return string.repeat(times);
+}
+
+/**
+ * float -
+ * @param float num
+ * @return float
+ **/
+
+function floor(num) {
+  return Math.floor(num);
+}
+
+/**
+ * ceil -
+ * @param float num
+ * @return float
+ **/
+
+function ceil(num) {
+  return Math.ceil(num);
+}
+
 export {
     array_change_key_case
   , array_chunk
@@ -3554,5 +3636,12 @@ export {
   , utf8_encode
   , xdiff_string_diff
   , xdiff_string_patch
+  , str_pad
+  , str_repeat
+  , STR_PAD_LEFT
+  , STR_PAD_RIGHT
+  , STR_PAD_BOTH
+  , floor
+  , ceil
 };
 

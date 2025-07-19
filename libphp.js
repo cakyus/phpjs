@@ -3562,6 +3562,43 @@ function ceil(num) {
   return Math.ceil(num);
 }
 
+/**
+ * gettype - Get the type of a variable
+ *
+ * @param mixed value
+ * @return string
+ *
+ * Possible values for the returned string are:
+ * "boolean", "integer", "double", "string", "array", "object",
+ * "resource", "NULL", "unknown type"
+ *
+ * @link https://www.php.net/manual/en/function.gettype.php
+ **/
+
+function gettype(value) {
+  const type = typeof(value);
+  if (type == 'number') {
+    if (Number.isInteger(value)) {
+      return 'integer';
+    }
+    return 'double';
+  } else if (type == 'object') {
+    if (Object.is(value, null)) {
+      return 'NULL';
+    } else if (Array.isArray(value)) {
+      return 'array';
+    }
+    return 'object';
+  } else if (type == 'string') {
+    return 'string';
+  } else if (type == 'undefined') {
+    return 'NULL';
+  } else if (type == 'boolean') {
+    return 'boolean';
+  }
+  throw Error('Unknown type. '+type);
+}
+
 export {
     array_change_key_case
   , array_chunk
@@ -3643,5 +3680,6 @@ export {
   , STR_PAD_BOTH
   , floor
   , ceil
+  , gettype
 };
 

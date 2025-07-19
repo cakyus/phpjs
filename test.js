@@ -14,6 +14,7 @@ import {
   , STR_PAD_LEFT
   , STR_PAD_RIGHT
   , STR_PAD_BOTH
+  , gettype
 } from './libphp.js';
 
 test_is_array();
@@ -27,6 +28,20 @@ test_strtoupper();
 test_strtolower();
 test_get_class_vars();
 test_str_pad();
+test_gettype();
+
+function test_gettype() {
+
+  assert('integer', gettype(1));
+  assert('double', gettype(1.5));
+  assert('NULL', gettype(null));
+  assert('object', gettype({}));
+  assert('string', gettype('foo'));
+
+  assert('array', gettype([1,2]));
+  assert('NULL', gettype(undefined));
+  assert('boolean', gettype(true));
+}
 
 function test_str_pad() {
   const input = 'Alien';

@@ -3599,6 +3599,17 @@ function gettype(value) {
   throw Error('Unknown type. '+type);
 }
 
+/**
+ * @param string text
+ * @param bool associative default null
+ * @param int depth default 512
+ * @param int flags default 0
+ **/
+
+function json_decode(text, associative, depth, flags) {
+  return JSON.parse(text);
+}
+
 export {
     array_change_key_case
   , array_chunk
@@ -3681,5 +3692,6 @@ export {
   , floor
   , ceil
   , gettype
+  , json_decode
 };
 

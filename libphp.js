@@ -2657,53 +2657,109 @@ function reset (arr) {
 }
 
 /**
- * $_GET for phpjs
- */
-function str_replace (search, replace, subject, countObj) {
-  var i = 0
-  var j = 0
-  var temp = ''
-  var repl = ''
-  var sl = 0
-  var fl = 0
-  var f = [].concat(search)
-  var r = [].concat(replace)
-  var s = subject
-  var ra = Object.prototype.toString.call(r) === '[object Array]'
-  var sa = Object.prototype.toString.call(s) === '[object Array]'
-  s = [].concat(s)
-  var $global = (typeof window !== 'undefined' ? window : global)
-  $global.$locutus = $global.$locutus || {}
-  var $locutus = $global.$locutus
-  $locutus.php = $locutus.php || {}
-  if (typeof (search) === 'object' && typeof (replace) === 'string') {
-    temp = replace
-    replace = []
-    for (i = 0; i < search.length; i += 1) {
-      replace[i] = temp
-    }
-    temp = ''
-    r = [].concat(replace)
-    ra = Object.prototype.toString.call(r) === '[object Array]'
+ * str_replace -
+ *
+ * @param array|string search
+ * @param array|string replace
+ * @param array|string subject
+ * @param object count default null
+ *
+ * @return array|string
+ **/
+
+function str_replace(search, replace, subject, count) {
+
+  let o = []; // output
+  let t = []; // subject
+
+//   console.log('----');
+//   console.log('>> search', JSON.stringify(search));
+//   console.log('>> replace', JSON.stringify(replace));
+//   console.log('>> subject', JSON.stringify(subject));
+
+  if (is_array(search) == false) {
+    search = [search];
   }
-  if (typeof countObj !== 'undefined') {
-    countObj.value = 0
+
+  if (is_array(replace) == false) {
+    replace = [replace];
   }
-  for (i = 0, sl = s.length; i < sl; i++) {
-    if (s[i] === '') {
-      continue
-    }
-    for (j = 0, fl = f.length; j < fl; j++) {
-      temp = s[i] + ''
-      repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0]
-      s[i] = (temp).split(f[j]).join(repl)
-      if (typeof countObj !== 'undefined') {
-        countObj.value += ((temp.split(f[j])).length - 1)
+
+  if (is_array(subject) == true) {
+    throw Error('TODO');
+  }
+
+  if (is_object(count) == true) {
+    throw Error('TODO');
+  }
+
+  subject = [subject];
+
+  for (let i=0; i < search.length; i++) {
+    for (let j=0; j < subject.length; j++) {
+      let position = subject[j].indexOf(search[i]);
+      if (position == -1) {
+        continue;
+      }
+      const prev = substr(subject[j], 0, position);
+      const current = search[i];
+      const next = substr(subject[j], position + search[i].length);
+//       console.log('>>>'
+//         , JSON.stringify(prev)
+//         , JSON.stringify(current)
+//         , JSON.stringify(next)
+//         );
+//       console.log('> subject', JSON.stringify(subject));
+      if (prev.length == 0) {
+        // at the beginning of subject
+        if (next.length == 0) {
+//           console.log('P0N0');
+          // also at the end of subject -> do nothing
+        } else {
+//           console.log('P0N1');
+          subject[j] = current;
+          subject[j + 1] = next;
+//           console.log('>> subject', JSON.stringify(subject));
+        }
+      } else {
+        if (next.length == 0) {
+//           console.log('P1N0');
+          // at the end of subject
+          subject[j] = prev;
+          subject[j + 1] = current;
+//           console.log('>> subject', JSON.stringify(subject));
+        } else {
+          subject[j] = prev;
+          subject[j + 1] = current;
+          subject[j + 2] = next;
+//           console.log('P1N1');
+//           console.log('>> subject', JSON.stringify(subject));
+        }
       }
     }
   }
-  return sa ? s : s[0]
-};
+
+  // replace
+
+  for (let i=0; i < subject.length; i++) {
+    for (let j=0; j < search.length; j++) {
+      if (subject[i] == search[j]) {
+        if (Object.is(replace[j], undefined)) {
+          subject[i] = '';
+        } else {
+          subject[i] = replace[j];
+        }
+        break;
+      }
+    }
+  }
+
+//   console.log('>> subject', JSON.stringify(subject));
+//   console.log('>> subject', subject.join(''));
+
+  return subject.join('');
+}
+
 /**
  * utf8_decode for phpjs
  */

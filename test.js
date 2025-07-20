@@ -15,6 +15,7 @@ import {
   , STR_PAD_RIGHT
   , STR_PAD_BOTH
   , gettype
+  , str_replace
 } from './libphp.js';
 
 test_is_array();
@@ -29,6 +30,20 @@ test_strtolower();
 test_get_class_vars();
 test_str_pad();
 test_gettype();
+test_str_replace();
+
+function test_str_replace() {
+
+  assert('b', str_replace('a', 'b', 'a'));
+  assert('bb', str_replace('a', 'b', 'ab'));
+  assert('bb', str_replace('a', 'b', 'ba'));
+  assert('abc', str_replace('d', 'b', 'adc'));
+  assert('abcb', str_replace('d', 'b', 'adcd'));
+  assert('babcb', str_replace('d', 'b', 'dadcd'));
+
+  assert('cd', str_replace('ab', '', 'abcd'));
+  assert('cdcd', str_replace('ab', '', 'abcdabcd'));
+}
 
 function test_gettype() {
 

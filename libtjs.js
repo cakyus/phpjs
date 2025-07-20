@@ -141,6 +141,16 @@ async function passthru(command) {
 // @return string|false
 
 async function file_get_contents(filename) {
+
+  if (filename == 'php://stdin') {
+    let text = '';
+    const decoder = new TextDecoder();
+    let chars = new Uint8Array(4096);
+    await tjs.stdin.read(chars);
+    text = decoder.decode(chars);
+    return text;
+  }
+
   const chars = await tjs.readFile(filename);
   const decoder = new TextDecoder();
   return decoder.decode(chars);

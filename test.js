@@ -1,21 +1,22 @@
 import { assert } from './libtest.js';
 import {
-    empty
-  , explode
-  , fnmatch
-  , in_array
-  , is_array
-  , property_exists
-  , strtoupper
-  , strtolower
-  , substr
-  , get_class_vars
-  , str_pad
-  , STR_PAD_LEFT
-  , STR_PAD_RIGHT
-  , STR_PAD_BOTH
-  , gettype
-  , str_replace
+   empty
+ , STR_PAD_BOTH
+ , STR_PAD_LEFT
+ , STR_PAD_RIGHT
+ , explode
+ , fnmatch
+ , get_class_vars
+ , gettype
+ , in_array
+ , is_array
+ , is_string
+ , property_exists
+ , str_pad
+ , str_replace
+ , strtolower
+ , strtoupper
+ , substr
 } from './libphp.js';
 
 test_is_array();
@@ -31,6 +32,21 @@ test_get_class_vars();
 test_str_pad();
 test_gettype();
 test_str_replace();
+test_is_string();
+
+function test_is_string() {
+
+  assert(false, is_string(1));
+  assert(false, is_string(1.5));
+  assert(false, is_string(null));
+  assert(false, is_string({}));
+  assert(true,  is_string('foo'));
+  assert(true,  is_string('1'));
+
+  assert(false, is_string([1,2]));
+  assert(false, is_string(undefined));
+  assert(false, is_string(true));
+}
 
 function test_str_replace() {
 

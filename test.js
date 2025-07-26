@@ -18,6 +18,7 @@ import {
  , strtolower
  , strtoupper
  , substr
+ , get_class
 } from './libphp.js';
 
 test_is_array();
@@ -35,6 +36,12 @@ test_gettype();
 test_str_replace();
 test_is_string();
 test_rand();
+test_get_class();
+
+function test_get_class() {
+  const o = {};
+  assert('Object', get_class(o));
+}
 
 function test_rand(arg) {
 

@@ -3718,6 +3718,16 @@ function rand(min, max) {
   return result;
 }
 
+/**
+ * get_class - Returns the name of the class of an object
+ * @param object object
+ * @return string
+ **/
+
+function get_class(object) {
+  return object.constructor.name;
+}
+
 export {
    STR_PAD_BOTH
  , STR_PAD_LEFT
@@ -3777,6 +3787,7 @@ export {
  , explode
  , floor
  , fnmatch
+ , get_class
  , get_class_vars
  , gettype
  , in_array

@@ -3476,7 +3476,7 @@ function xdiff_string_patch (originalStr, patch, flags, errorObj) { // eslint-di
 // @return bool
 
 function property_exists(value, property) {
-  
+
   // How do I check if an object has a specific property in JavaScript ?
   // https://stackoverflow.com/a/77782005/82126
 
@@ -3677,6 +3677,47 @@ function is_string(value) {
   return typeof(value) == 'string';
 }
 
+/**
+ * rand - Generate a random integer
+ * @param int min
+ * @param int max
+ * @return int
+ * @link https://www.php.net/manual/en/function.rand.php
+ **/
+
+function rand(min, max) {
+
+  const RAND_MAX = 2147483647;
+
+  // If called without the optional min, max arguments rand()
+  // returns a pseudo-random integer between 0 and getrandmax().
+
+  // If you want a random number between 5 and 15 (inclusive)
+  // , for example, use rand(5, 15).
+
+  if (arguments.length == 2) {
+    if (gettype(arguments[0]) != 'integer') {
+      throw Error('Invalid type for arguments[0].');
+    }
+    if (gettype(arguments[1]) != 'integer') {
+      throw Error('Invalid type for arguments[1].');
+    }
+    if (min < 0) {
+      throw Error('min is less than zero');
+    }
+    if (max > RAND_MAX) {
+      throw Error('max is greated than '+RAND_MAX);
+    }
+  } else {
+    min = 0;
+    max = RAND_MAX;
+  }
+
+  let result = Math.random() * (max - min) + min;
+  result = Math.round(result);
+  return result;
+}
+
 export {
    STR_PAD_BOTH
  , STR_PAD_LEFT
@@ -3748,6 +3789,7 @@ export {
  , next
  , prev
  , property_exists
+ , rand
  , range
  , reset
  , str_pad

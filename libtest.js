@@ -5,7 +5,7 @@ function assert(expect, result, message) {
   let result_type = typeof(result);
 
   if (expect_type != result_type) {
-    throw Error('Expect type. '+expect_type+' '+result_type);
+    throw Error('Expect type. '+expect_type+' <-> '+result_type);
   } else if (expect_type == 'boolean') {
     if (expect == result) {
       // do nothing

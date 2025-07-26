@@ -12,6 +12,7 @@ import {
  , is_array
  , is_string
  , property_exists
+ , rand
  , str_pad
  , str_replace
  , strtolower
@@ -33,6 +34,20 @@ test_str_pad();
 test_gettype();
 test_str_replace();
 test_is_string();
+test_rand();
+
+function test_rand(arg) {
+
+  let i;
+
+  i = rand();
+  assert(true, i > -1);
+  assert(true, i < 2147483647+1);
+
+  i = rand(5, 15);
+  assert(true, i > -1);
+  assert(true, i < 15+1);
+}
 
 function test_is_string() {
 

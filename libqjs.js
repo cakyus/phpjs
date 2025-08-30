@@ -1,11 +1,14 @@
 // libqjs.js
 
 import {
-empty,
-fnmatch
+    empty
+  , fnmatch
 } from './libphp.js';
-import * as os from 'qjs:os';
-import * as std from 'qjs:std';
+import {
+    readdir as os_readdir
+  , stat as os_stat
+  , exec as os_exec
+} from 'os';
 
 // @return bool
 
@@ -38,7 +41,7 @@ async function is_file(file) {
 
 function stat(filename) {
 
-  let js_stat = os.stat(filename);
+  let js_stat = os_stat(filename);
   if (empty(js_stat) == true) {
     return false;
   } else if (js_stat[1] != 0) {
@@ -79,7 +82,7 @@ function filemtime(filename) {
 function glob(pattern, flags) {
 
   const files = [];
-  const glob_files = os.readdir('.');
+  const glob_files = os_readdir('.');
 
   for (let file of glob_files[0]) {
     if (file == '.' || file == '..') {
@@ -123,7 +126,7 @@ function putenv(assignment) {
 
 function passthru(command) {
   let options = {};
-  let exit_status = os.exec(command.split(' '));
+  let exit_status = os_exec(command.split(' '));
   if (exit_status == 0) {
     return null;
   }

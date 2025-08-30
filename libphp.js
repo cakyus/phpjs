@@ -3728,6 +3728,23 @@ function get_class(object) {
   return object.constructor.name;
 }
 
+/**
+ * escapeshellarg - Escape a string to be used as a shell argument
+ * @param string arg
+ * @return string
+ **/
+
+function escapeshellarg(arg) {
+  const s = new Array;
+  s.push("'");
+  for (let i=0; i<arg.length; i++) {
+    let c = arg[i];
+    s.push(c);
+  }
+  s.push("'");
+  return s.join('');
+}
+
 export {
    STR_PAD_BOTH
  , STR_PAD_LEFT
@@ -3784,6 +3801,7 @@ export {
  , each
  , empty
  , end
+ , escapeshellarg
  , explode
  , floor
  , fnmatch

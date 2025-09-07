@@ -3735,6 +3735,9 @@ function get_class(object) {
  **/
 
 function escapeshellarg(arg) {
+  // TODO
+  // when a single quote exists then use a double quote as quote
+  // when a double quote exists then use a single quote as quote
   const s = new Array;
   s.push("'");
   for (let i=0; i<arg.length; i++) {
